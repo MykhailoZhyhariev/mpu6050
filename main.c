@@ -14,26 +14,16 @@ int main(void) {
     mpu6050 mpu;
 
     while (1) {
-        MPU6050_whoAmI(&mpu);
-        LCDWriteIntXY(0,0, mpu.who, 3);
-
-        // MPU6050_countTemp(&mpu);
-        // LCDWriteIntXY(0,0, mpu.temp, 5);
+        // MPU6050_whoAmI(&mpu);
+        // LCDWriteIntXY(0,0, mpu.who, 3);
 
         // MPU6050_getTemp(&mpu);
-        // mpu.temp_h = negateTransition(mpu.temp_h);
-        // mpu.temp_l = negateTransition(mpu.temp_l);
         // LCDWriteIntXY(0, 0, mpu.temp_h, 5);
         // LCDWriteIntXY(0, 1, mpu.temp_l, 5);
 
+        MPU6050_countTemp(&mpu);
+        LCDWriteIntXY(0,0, mpu.temp, 2);
+
         _delay_ms(500);
     }
-}
-
-signed char negateTransition(signed char reg) {
-    if (reg < 0) {
-        reg *= -1;
-    }
-
-    return reg;
 }

@@ -40,8 +40,8 @@
 
 typedef struct {
     unsigned char who;
-    signed char temp_h, temp_l;
-    signed long int temp;
+    unsigned char temp_h, temp_l;
+    float temp;
 } mpu6050;
 
 void MPU6050_Init(void);
