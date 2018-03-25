@@ -18,11 +18,11 @@ int main(void) {
         // LCDWriteIntXY(0,0, mpu.who, 3);
 
         // MPU6050_getTemp(&mpu);
-        // LCDWriteIntXY(0, 0, mpu.temp_h, 5);
-        // LCDWriteIntXY(0, 1, mpu.temp_l, 5);
+        LCDWriteIntXY(0, 0, mpu.temp_h, 5);
+        LCDWriteIntXY(0, 1, mpu.temp_l, 5);
 
         MPU6050_countTemp(&mpu);
-        LCDWriteIntXY(0,0, mpu.temp, 2);
+        LCDWriteIntXY(10,0, mpu.temp, 2);
 
         _delay_ms(500);
     }
