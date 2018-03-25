@@ -18,10 +18,10 @@
 # FUSES ........ Parameters for avrdude to flash the fuses appropriately.
 
 DEVICE     = atmega8
-CLOCK      = 8000000
-PROGRAMMER = #-c stk500v2 -P avrdoper
-OBJECTS    = main.o lcd/lcd.o twi/i2c.o constants.o mpu6050.o
-FUSES      = -U hfuse:w:0xd9:m -U lfuse:w:0x24:m
+CLOCK      = 1000000
+PROGRAMMER = -c usbasp
+OBJECTS    = main.o lcd/lcd.o twi/i2c.o constants.o mpu6050_low.o mpu6050_high.o
+FUSES      = -U hfuse:w:0xd9:m -U lfuse:w:0xe1:m
 
 # ATMega8 fuse bits used above (fuse bits for other devices are different!):
 # Example for 8 MHz internal oscillator
@@ -99,4 +99,4 @@ disasm:	main.elf
 	avr-objdump -d main.elf
 
 cpp:
-	$(COMPILE) -E main.c lcd/lcd.c twi/i2c.c constants.c mpu6050.c
+	$(COMPILE) -E main.c lcd/lcd.c twi/i2c.c constants.c mpu6050_low.c mpu6050_high.c

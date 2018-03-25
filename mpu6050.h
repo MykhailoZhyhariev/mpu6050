@@ -41,13 +41,15 @@
 typedef struct {
     unsigned char who;
     signed char temp_h, temp_l;
-    unsigned char temp;
+    signed long int temp;
 } mpu6050;
 
-void Init_6050(void);
+void MPU6050_Init(void);
 
-void whoAmI(mpu6050 *mpu6050);
+void MPU6050_whoAmI(mpu6050 *mpu6050);
 
-void getTemper(mpu6050 *mpu6050);
+void MPU6050_getTemp(mpu6050 *mpu6050);
+
+void MPU6050_countTemp(mpu6050 *mpu6050);
 
 #endif

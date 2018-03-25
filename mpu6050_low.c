@@ -7,7 +7,7 @@
 #include "constants.c"
 #include "twi/i2c.h"
 
-void Init_6050(void) {
+void MPU6050_Init(void) {
     //Sets sample rate to 8000/1+7 = 1000Hz
     I2C_write(MPU6050_W, MPU6050_RA_SMPLRT_DIV, 0x07);
 
@@ -87,7 +87,7 @@ void Init_6050(void) {
     I2C_write(MPU6050_W, MPU6050_RA_PWR_MGMT_2, 0x00);
 }
 
-void whoAmI(mpu6050 *mpu6050) {
+void MPU6050_whoAmI(mpu6050 *mpu6050) {
     i2c_start_cond();
     i2c_send_byte(MPU6050_W);
     i2c_send_byte(MPU6050_RA_WHO_AM_I);
@@ -99,7 +99,7 @@ void whoAmI(mpu6050 *mpu6050) {
     i2c_stop_cond();
 }
 
-void getTemper(mpu6050 *mpu6050) {
+void MPU6050_getTemp(mpu6050 *mpu6050) {
     i2c_start_cond();
     i2c_send_byte(MPU6050_W);
     i2c_send_byte(MPU6050_RA_TEMP_OUT_H);
