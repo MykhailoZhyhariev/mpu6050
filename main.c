@@ -3,7 +3,7 @@
 #include "lcd/lcd.h"
 #include "mpu6050.h"
 
-signed char negateTransition(signed char reg);
+int negateTransition(int value, char pos);
 
 int main(void) {
     LCDInit(8);
@@ -14,16 +14,18 @@ int main(void) {
     mpu6050 mpu;
 
     while (1) {
-        // MPU6050_whoAmI(&mpu);
-        // LCDWriteIntXY(0,0, mpu.who, 3);
+        MPU6050_getAccel(&mpu);
 
-        // MPU6050_getTemp(&mpu);
-        LCDWriteIntXY(0, 0, mpu.temp_h, 5);
-        LCDWriteIntXY(0, 1, mpu.temp_l, 5);
-
-        MPU6050_countTemp(&mpu);
-        LCDWriteIntXY(10,0, mpu.temp, 2);
-
-        _delay_ms(500);
+        _delay_ms(250);
     }
+}
+
+int negateTransition(int value, char pos) {
+    if (value > 0) {
+        LCDWriteStringXY(pos, 0, "+");
+        return value;
+    }
+
+    LCDWriteStringXY(pos, 0, "-");
+    return -(value);
 }

@@ -7,6 +7,9 @@
 #include "constants.c"
 #include "twi/i2c.h"
 
+/**
+ * Initialise and set teh settings MPU6050
+ */
 void MPU6050_Init(void) {
     //Sets sample rate to 8000/1+7 = 1000Hz
     I2C_write(MPU6050_W, SMPLRT_DIV, 0x07);
@@ -87,6 +90,10 @@ void MPU6050_Init(void) {
     I2C_write(MPU6050_W, PWR_MGMT_2, 0x00);
 }
 
+/**
+ * Returning a value of "whoAmI" register MPU6050
+ * @param mpu6050 - structure that containing all measured variables
+ */
 void MPU6050_whoAmI(mpu6050 *mpu6050) {
     i2c_start_cond();
     i2c_send_byte(MPU6050_W);
@@ -99,6 +106,10 @@ void MPU6050_whoAmI(mpu6050 *mpu6050) {
     i2c_stop_cond();
 }
 
+/**
+ * Getting a value of temperature registers MPU6050
+ * @param mpu6050 - structure that containing all measured variables
+ */
 void MPU6050_getTemp(mpu6050 *mpu6050) {
     i2c_start_cond();
     i2c_send_byte(MPU6050_W);
@@ -110,4 +121,55 @@ void MPU6050_getTemp(mpu6050 *mpu6050) {
     mpu6050->temp_h = i2c_get_byte(0);
     mpu6050->temp_l = i2c_get_byte(1);
     i2c_stop_cond();
+}
+
+/**
+ * Getting a value of accelerometer registers MPU6050
+ * @param mpu6050 - structure that containing all measured variables
+ */
+void MPU6050_getAccel(mpu6050 *mpu6050) {
+
+    i2c_start_cond();
+    i2c_send_byte(MPU6050_W);
+    i2c_send_byte(ACCEL_XOUT_H);
+    i2c_stop_cond();
+
+    i2c_start_cond();
+    i2c_send_byte(MPU6050_R);
+    mpu6050->accel_xh = i2c_get_byte(0);
+    mpu6050->accel_xl = i2c_get_byte(0);
+    mpu6050->accel_yh = i2c_get_byte(0);
+    mpu6050->accel_yl = i2c_get_byte(0);
+    mpu6050->accel_zh = i2c_get_byte(0);
+    mpu6050->accel_zl = i2c_get_byte(1);
+    i2c_stop_cond();
+
+    mpu6050->accel_x = (mpu6050->accel_xh << 8) + mpu6050->accel_xl;
+    mpu6050->accel_y = (mpu6050->accel_yh << 8) + mpu6050->accel_yl;
+    mpu6050->accel_z = (mpu6050->accel_zh << 8) + mpu6050->accel_zl;
+}
+
+/**
+ * Getting a value of gyroscope registers MPU6050
+ * @param mpu6050 - structure that containing all measured variables
+ */
+void MPU6050_getGyro(mpu6050 *mpu6050) {
+    i2c_start_cond();
+    i2c_send_byte(MPU6050_W);
+    i2c_send_byte(GYRO_XOUT_H);
+    i2c_stop_cond();
+
+    i2c_start_cond();
+    i2c_send_byte(MPU6050_R);
+    mpu6050->gyro_xh = i2c_get_byte(0);
+    mpu6050->gyro_xl = i2c_get_byte(0);
+    mpu6050->gyro_yh = i2c_get_byte(0);
+    mpu6050->gyro_yl = i2c_get_byte(0);
+    mpu6050->gyro_zh = i2c_get_byte(0);
+    mpu6050->gyro_zl = i2c_get_byte(1);
+    i2c_stop_cond();
+
+    mpu6050->gyro_x = (mpu6050->gyro_xh << 8) + mpu6050->gyro_xl;
+    mpu6050->gyro_y = (mpu6050->gyro_yh << 8) + mpu6050->gyro_yl;
+    mpu6050->gyro_z = (mpu6050->gyro_zh << 8) + mpu6050->gyro_zl;
 }

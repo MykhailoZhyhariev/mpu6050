@@ -3,53 +3,50 @@
  * License: MIT
  */
 
-// signed char TEMPER_h;
-// signed char TEMPER_l;
-// unsigned char t;
-//
-// unsigned char ACCEL_xh;
-// unsigned char ACCEL_xl;
-// unsigned char ACCEL_yh;
-// unsigned char ACCEL_yl;
-// unsigned char ACCEL_zh;
-// unsigned char ACCEL_zl;
-// long int ACCEL_X;
-// long int ACCEL_Y;
-// long int ACCEL_Z;
-//
-// signed char ACCEL_XANGLE = 0;
-// signed char ACCEL_YANGLE = 0;
-// signed char ACCEL_ZANGLE = 0;
-//
-// unsigned char GYRO_xh;
-// unsigned char GYRO_xl;
-// unsigned char GYRO_yh;
-// unsigned char GYRO_yl;
-// unsigned char GYRO_zh;
-// unsigned char GYRO_zl;
-// long int GYRO_X;
-// long int GYRO_Y;
-// long int GYRO_Z;
-//
-// signed int GYRO_ANGLE_Z = 0;
-//
-// unsigned char who;
-
 #ifndef MPU_6050
 #define MPU_6050
 
+// Structure that containing all measured variables
 typedef struct {
+    // "whoAmI" register value
     unsigned char who;
+
+    // High and low value of temperature registers
     unsigned char temp_h, temp_l;
+    // Temperature in degrees Celsius
     float temp;
+
+    // High and low value of accelerometer registers of X, Y and Z axises
+    unsigned char accel_xh, accel_xl;
+    unsigned char accel_yh, accel_yl;
+    unsigned char accel_zh, accel_zl;
+    // Combined values of registers for X, Y, Z axises
+    unsigned int accel_x, accel_y, accel_z;
+
+    // High and low value of gyroscope registers of X, Y and Z axises
+    unsigned char gyro_xh, gyro_xl;
+    unsigned char gyro_yh, gyro_yl;
+    unsigned char gyro_zh, gyro_zl;
+    // Combined values of registers for X, Y, Z axises
+    unsigned int gyro_x, gyro_y, gyro_z;
 } mpu6050;
 
+// Initialise and set teh settings MPU6050
 void MPU6050_Init(void);
 
+// Returning a value of "whoAmI" register MPU6050
 void MPU6050_whoAmI(mpu6050 *mpu6050);
 
+// Getting a value of temperature registers MPU6050
 void MPU6050_getTemp(mpu6050 *mpu6050);
 
+// Getting a value of accelerometer registers MPU6050
+void MPU6050_getAccel(mpu6050 *mpu6050);
+
+// Getting a value of gyroscope registers MPU6050
+void MPU6050_getGyro(mpu6050 *mpu6050);
+
+// computing the temperature in degrees Celsius
 void MPU6050_countTemp(mpu6050 *mpu6050);
 
 #endif

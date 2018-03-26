@@ -95,7 +95,7 @@ unsigned char i2c_get_byte(unsigned char last_byte)	{
 		I2C_DDR &= ~_BV(SCL);
 		I2C_DELAY
 
-		if ((I2C_PIN&_BV(SDA))==_BV(SDA)) res = res | 0x01;
+		if ((I2C_PIN & _BV(SDA)) == _BV(SDA)) res = res | 0x01;
 
 		I2C_DDR |= _BV(SCL);
 		I2C_DELAY
