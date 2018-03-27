@@ -4,6 +4,7 @@
  */
 
 #include "mpu6050.h"
+#include "lcd/lcd.h"
 
 /**
  * computing the temperature in degrees Celsius
@@ -14,7 +15,5 @@ void MPU6050_countTemp(mpu6050 *mpu6050) {
     MPU6050_getTemp(mpu6050);
 
     // computing the temperature in degrees Celsius
-    mpu6050->temp = (mpu6050->temp_h << 8) + mpu6050->temp_l;
-    mpu6050->temp /= 340;
-    mpu6050->temp += 36.53;
+    mpu6050->temp = (mpu6050->temp_reg / 340) + 36.53;
 }

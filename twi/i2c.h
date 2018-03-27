@@ -22,6 +22,4 @@ unsigned char i2c_send_byte(unsigned char data);
 
 unsigned char i2c_get_byte(unsigned char last_byte);
 
-void I2C_write(unsigned reg0, char reg1, unsigned char value);
-
 #endif

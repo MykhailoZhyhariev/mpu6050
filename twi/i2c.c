@@ -115,11 +115,3 @@ unsigned char i2c_get_byte(unsigned char last_byte)	{
 
 	return res;
 }
-
-void I2C_write(unsigned reg0, char reg1, unsigned char value) {
-    i2c_start_cond();
-    i2c_send_byte(reg0);
-    i2c_send_byte(reg1);
-    i2c_send_byte(value);
-    i2c_stop_cond();
-}
