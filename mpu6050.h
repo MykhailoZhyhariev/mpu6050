@@ -23,30 +23,60 @@ typedef struct {
     unsigned int gyro_x, gyro_y, gyro_z;
 } mpu6050;
 
+/**
+ * Move pointer to register
+ * @param reg register address [hex]
+ */
 void _MPU6050_moveToReg(unsigned char reg);
 
-// Getting the value from a register
+/**
+ * Getting the value from a register
+ * @param  reg register address [hex]
+ * @param  len number of bytes of the register
+ * @return     register value
+ */
 int _MPU6050_getRegValue(unsigned char reg, unsigned char len);
 
-// Writing value to the register
+/**
+ * Writing value to the register
+ * @param reg   register address [hex]
+ * @param value value to write
+ */
 void _MPU6050_writeToReg(unsigned char reg, unsigned char value);
 
-// Initialise and set the settings MPU6050
+/**
+ * Initialise and set the settings MPU6050
+ */
 void MPU6050_Init(void);
 
-// Returning a value of "whoAmI" register MPU6050
+/**
+ * Returning a value of "whoAmI" register MPU6050
+ * @param mpu6050 - structure that containing all measured variables
+ */
 void MPU6050_whoAmI(mpu6050 *mpu6050);
 
-// Getting a value of temperature registers MPU6050
+/**
+ * Getting a value of temperature registers MPU6050
+ * @param mpu6050 - structure that containing all measured variables
+ */
 void MPU6050_getTemp(mpu6050 *mpu6050);
 
-// Getting a value of accelerometer registers MPU6050
+/**
+ * Getting a value of accelerometer registers MPU6050
+ * @param mpu6050 - structure that containing all measured variables
+ */
 void MPU6050_getAccel(mpu6050 *mpu6050);
 
-// Getting a value of gyroscope registers MPU6050
+/**
+ * Getting a value of gyroscope registers MPU6050
+ * @param mpu6050 - structure that containing all measured variables
+ */
 void MPU6050_getGyro(mpu6050 *mpu6050);
 
-// Computing the temperature in degrees Celsius
+/**
+ * computing the temperature in degrees Celsius
+ * @param mpu6050 - structure that containing all measured variables
+ */
 void MPU6050_countTemp(mpu6050 *mpu6050);
 
 #endif
