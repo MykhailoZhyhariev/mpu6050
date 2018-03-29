@@ -112,5 +112,3 @@
 // Pin AD0 connected to ground
 #define MPU6050_R 0b11010001
 #define MPU6050_W 0b11010000
-
-#define MPU6050 "/dev/i2c-2"
