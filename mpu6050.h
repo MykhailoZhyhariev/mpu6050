@@ -8,6 +8,9 @@
 
 // Structure that containing all measured variables
 typedef struct {
+    // pointer on device file
+    int fd;
+
     // "whoAmI" register value
     unsigned char who;
 
@@ -24,30 +27,10 @@ typedef struct {
 } mpu6050;
 
 /**
- * Move pointer to register
- * @param reg register address [hex]
- */
-void _MPU6050_moveToReg(unsigned char reg);
-
-/**
- * Getting the value from a register
- * @param  reg register address [hex]
- * @param  len number of bytes of the register
- * @return     register value
- */
-int _MPU6050_getRegValue(unsigned char reg, unsigned char len);
-
-/**
- * Writing value to the register
- * @param reg   register address [hex]
- * @param value value to write
- */
-void _MPU6050_writeToReg(unsigned char reg, unsigned char value);
-
-/**
  * Initialise and set the settings MPU6050
+ * @return  [fd] - pointer on device file
  */
-void MPU6050_Init(void);
+int MPU6050_Init(void);
 
 /**
  * Returning a value of "whoAmI" register MPU6050
