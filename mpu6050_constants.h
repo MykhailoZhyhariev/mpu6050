@@ -109,6 +109,6 @@
 #define FIFO_R_W 0x74
 #define WHO_AM_I 0x75
 
-// Pin AD0 connected to ground 
+// Pin AD0 connected to ground
 #define MPU6050_R 0b11010001
 #define MPU6050_W 0b11010000
