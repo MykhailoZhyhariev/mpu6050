@@ -1,4 +1,4 @@
-/* Name: main.c
+/* Name: mpu6050_high.c
  * Author: Zhyhariev Mikhail
  * License: MIT
  */
@@ -6,13 +6,13 @@
 #include "mpu6050.h"
 
 /**
- * computing the temperature in degrees Celsius
- * @param mpu6050 - structure that containing all measured variables
+ * Computing the temperature in degrees Celsius
+ * @return      temperature in degrees Celsius
  */
-void MPU6050_countTemp(mpu6050 *mpu6050) {
-    // getting the values of temp_high and temp_l registers
-    MPU6050_getTemp(mpu6050);
+float MPU6050_countTemp(void) {
+    // Getting the values of temp_high and temp_l registers
+    int temp_reg = MPU6050_getTemp();
 
-    // computing the temperature in degrees Celsius
-    mpu6050->temp = (mpu6050->temp_reg / 340) + 36.53;
+    // Computing the temperature in degrees Celsius
+    return temp_reg / 340 + 36.53;
 }
