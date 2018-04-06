@@ -6,6 +6,13 @@
 #ifndef MPU_6050
 #define MPU_6050
 
+#define START 33000
+#define MINUS 33001
+#define PLUS  33002
+#define ACCEL 33003
+#define GYRO  33004
+#define TEMP  33005
+
 /**
  * Move pointer to register
  * @param reg register address [hex]
@@ -70,5 +77,26 @@ int* MPU6050_getGyro(void);
  * @return      temperature in degrees Celsius
  */
 float MPU6050_countTemp(void);
+
+/**
+ * [USART_FewBytesTransmit description]
+ * @param data  [description]
+ * @param bytes [description]
+ */
+void MPU6050_FewBytesTransmit(int data, unsigned char bytes);
+
+/**
+ * [MPU6050_arrayTransmit description]
+ * @param arr [description]
+ * @param len [description]
+ */
+void MPU6050_arrayTransmit(int* arr, unsigned char len);
+
+/**
+ * [MPU6050_dataTransmit description]
+ * @param id   [description]
+ * @param data [description]
+ */
+void MPU6050_dataTransmit(int id, int* data);
 
 #endif

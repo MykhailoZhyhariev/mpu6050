@@ -20,7 +20,7 @@
 DEVICE     = atmega8
 CLOCK      = 1000000
 PROGRAMMER = -c usbasp
-OBJECTS    = main.o uart/uart.o twi/i2c.o mpu6050_i2c.o mpu6050_low.o mpu6050_high.o
+OBJECTS    = main.o uart/uart.o twi/i2c.o mpu6050_i2c.o mpu6050_low.o mpu6050_high.o mpu6050_uart.o
 FUSES      = -U hfuse:w:0xd9:m -U lfuse:w:0xe1:m
 
 # ATMega8 fuse bits used above (fuse bits for other devices are different!):
@@ -99,4 +99,4 @@ disasm:	main.elf
 	avr-objdump -d main.elf
 
 cpp:
-	$(COMPILE) -E main.c uart/uart.c  twi/i2c.c mpu6050_i2c.c mpu6050_low.c mpu6050_high.c
+	$(COMPILE) -E main.c uart/uart.c  twi/i2c.c mpu6050_i2c.c mpu6050_low.c mpu6050_high.c mpu6050_uart.c
