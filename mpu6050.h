@@ -7,8 +7,10 @@
 #define MPU_6050
 
 #define START 33000
+
 #define MINUS 33001
 #define PLUS  33002
+
 #define ACCEL 33003
 #define GYRO  33004
 #define TEMP  33005
@@ -83,7 +85,7 @@ float MPU6050_countTemp(void);
  * @param data  [description]
  * @param bytes [description]
  */
-void MPU6050_FewBytesTransmit(int data, unsigned char bytes);
+void MPU6050_twoBytesTransmit(int data);
 
 /**
  * [MPU6050_arrayTransmit description]
