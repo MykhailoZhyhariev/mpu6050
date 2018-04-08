@@ -6,15 +6,6 @@
 #ifndef MPU_6050
 #define MPU_6050
 
-#define START 33000
-
-#define MINUS 33001
-#define PLUS  33002
-
-#define ACCEL 33003
-#define GYRO  33004
-#define TEMP  33005
-
 /**
  * Move pointer to register
  * @param reg register address [hex]
@@ -81,16 +72,28 @@ int* MPU6050_getGyro(void);
 float MPU6050_countTemp(void);
 
 /**
- * [USART_FewBytesTransmit description]
- * @param data  [description]
- * @param bytes [description]
+ * UART FUNCTION
+ */
+
+#define START 33000
+
+#define MINUS 33001
+#define PLUS  33002
+
+#define ACCEL 33003
+#define GYRO  33004
+#define TEMP  33005
+
+/**
+ * Transmit two bytes using UART interface
+ * @param data - two-byte value for transmit
  */
 void MPU6050_twoBytesTransmit(int data);
 
 /**
- * [MPU6050_arrayTransmit description]
- * @param arr [description]
- * @param len [description]
+ * Transmit an array of two-byte digits using UART interface
+ * @param arr - an array of two-byte digits
+ * @param len - length of array
  */
 void MPU6050_arrayTransmit(int* arr, unsigned char len);
 
