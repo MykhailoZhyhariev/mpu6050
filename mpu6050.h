@@ -75,6 +75,7 @@ float MPU6050_countTemp(void);
  * UART FUNCTION
  */
 
+// Identifiers
 #define START 33000
 
 #define MINUS 33001
@@ -98,9 +99,9 @@ void MPU6050_twoBytesTransmit(int data);
 void MPU6050_arrayTransmit(int* arr, unsigned char len);
 
 /**
- * [MPU6050_dataTransmit description]
- * @param id   [description]
- * @param data [description]
+ * Transmit MPU6050 data
+ * @param id   data type identifier
+ * @param data - two-byte value for transmit
  */
 void MPU6050_dataTransmit(int id, int* data);
 

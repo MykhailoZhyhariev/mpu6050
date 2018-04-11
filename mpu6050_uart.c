@@ -26,22 +26,31 @@ void MPU6050_twoBytesTransmit(int data) {
  */
 void MPU6050_arrayTransmit(int* arr, unsigned char len) {
     for (unsigned char i = 0; i < len; i++) {
-        // Create a мфкшф
         int data = arr[i];
+        // if the data variable is less than zero, invert it and transmit the "minus" identifier
         if (data < 0) {
             MPU6050_twoBytesTransmit(MINUS);
             data = -(data);
         } else {
+            // else transmit "plus" identifier
             MPU6050_twoBytesTransmit(PLUS);
         }
 
+        // transmit data
         MPU6050_twoBytesTransmit(data);
     }
 }
 
+/**
+ * Transmit MPU6050 data
+ * @param id   data type identifier
+ * @param data - two-byte value for transmit
+ */
 void MPU6050_dataTransmit(int id, int* data) {
+    // Transmit "start" identifier
     MPU6050_twoBytesTransmit(START);
 
+    //
     unsigned char len = 3;
 
     switch (id) {
