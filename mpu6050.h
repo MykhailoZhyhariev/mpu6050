@@ -86,20 +86,20 @@ float MPU6050_countTemp(void);
 #define TEMP  33005
 
 /**
- * Transmit two bytes using UART interface
+ * Transmiting two bytes using UART interface
  * @param data - two-byte value for transmit
  */
 void MPU6050_twoBytesTransmit(int data);
 
 /**
- * Transmit an array of two-byte digits using UART interface
+ * Transmiting an array of two-byte digits using UART interface
  * @param arr - an array of two-byte digits
  * @param len - length of array
  */
 void MPU6050_arrayTransmit(int* arr, unsigned char len);
 
 /**
- * Transmit MPU6050 data
+ * Transmiting MPU6050 data
  * @param id   data type identifier
  * @param data - two-byte value for transmit
  */
