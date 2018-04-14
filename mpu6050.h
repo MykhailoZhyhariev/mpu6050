@@ -7,6 +7,10 @@
 #define MPU_6050
 
 /**
+ *  I2C FUNCTIONS
+ */
+
+/**
  * Move pointer to register
  * @param reg register address [hex]
  */
@@ -27,6 +31,9 @@ int _MPU6050_getRegValue(unsigned char reg, unsigned char len);
  */
 void _MPU6050_writeToReg(unsigned char reg, unsigned char value);
 
+/**
+ * LOW LEVEL FUNCTIONS
+ */
 
 /**
  * Getting an array of registers values
@@ -66,13 +73,32 @@ int* MPU6050_getAccel(void);
 int* MPU6050_getGyro(void);
 
 /**
+ * HIGH LEVEL FUNCTIONS
+ */
+
+/**
  * Computing the temperature in degrees Celsius
  * @return      temperature in degrees Celsius
  */
 float MPU6050_countTemp(void);
 
 /**
- * UART FUNCTION
+ * Counts the deviation angle of the MPU6050 module from the accelerometer data
+ * @param  a - accelerometer data on the axes x, y, z
+ * @param  b - accelerometer data on the axes x, y, z
+ * @param  c - accelerometer data on the axes x, y, z
+ * @return   calculated angle
+ */
+float _MPU6050_countAngle(float a, float b, float c);
+
+/**
+ * Counts the deviation angles of the MPU6050 module from the accelerometer data on the axes x, y, z
+ * @return an array of the calculated angles
+ */
+float* MPU_getAccelAngle(void);
+
+/**
+ * UART FUNCTIONS
  */
 
 // Identifiers
