@@ -34,7 +34,7 @@ float MPU6050_countTemp(void) {
  * Counts the deviation angles of the MPU6050 module from the accelerometer data on the axes x, y, z
  * @return an array of the calculated angles
  */
-float* MPU_getAccelAngle(void) {
+float* MPU_getAccelAngles(void) {
     int* accel = MPU6050_getAccel();
     float *accel_angle = (float *)malloc(sizeof(float) * 3);
     accel_angle[0] = _MPU6050_countAngle(accel[0], accel[1], accel[2]);
@@ -42,4 +42,15 @@ float* MPU_getAccelAngle(void) {
     accel_angle[2] = _MPU6050_countAngle(accel[2], accel[0], accel[1]);
 
     return accel_angle;
+}
+
+/**
+ * [MPU_getFilteredAngles description]
+ * @param  previous_data [description]
+ * @param  filter_func   [description]
+ * @return               [description]
+ */
+float* MPU_getFilteredAngles(float *previous_data, float* (* filter_func)(float* data, float* previous_data, unsigned char len)) {
+    float* arr = MPU_getAccelAngles();
+    return filter_func(arr, previous_data, 3);
 }

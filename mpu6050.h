@@ -95,7 +95,9 @@ float _MPU6050_countAngle(float a, float b, float c);
  * Counts the deviation angles of the MPU6050 module from the accelerometer data on the axes x, y, z
  * @return an array of the calculated angles
  */
-float* MPU_getAccelAngle(void);
+float* MPU_getAccelAngles(void);
+
+float* MPU_getFilteredAngles(float *previous_data, float* (* filter_func)(float* data, float* previous_data, unsigned char len));
 
 /**
  * UART FUNCTIONS
