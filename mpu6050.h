@@ -97,7 +97,16 @@ float _MPU6050_countAngle(float a, float b, float c);
  */
 float* MPU_getAccelAngles(void);
 
-float* MPU_getFilteredAngles(float *previous_data, float* (* filter_func)(float* data, float* previous_data, unsigned char len));
+/**
+ * Carries out the filtration of calculated angles
+ * @param  previous_data - a previous values array of data
+ * @param  filter_func   - a function that filters a data
+ * @return               an array of filtered data
+ */
+float* MPU_getFilteredAngles(
+    float *previous_data,
+    float* (* filter_func)(float* data, float* previous_data, unsigned char len)
+);
 
 /**
  * UART FUNCTIONS

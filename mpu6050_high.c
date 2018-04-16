@@ -45,12 +45,17 @@ float* MPU_getAccelAngles(void) {
 }
 
 /**
- * [MPU_getFilteredAngles description]
- * @param  previous_data [description]
- * @param  filter_func   [description]
- * @return               [description]
+ * Carries out the filtration of calculated angles
+ * @param  previous_data - a previous values array of data
+ * @param  filter_func   - a function that filters a data
+ * @return               an array of filtered data
  */
-float* MPU_getFilteredAngles(float *previous_data, float* (* filter_func)(float* data, float* previous_data, unsigned char len)) {
+float* MPU_getFilteredAngles(
+    float *previous_data,
+    float* (* filter_func)(float* data, float* previous_data, unsigned char len)
+) {
+    // Obtain the angles calculated from the accelerometer data
     float* arr = MPU_getAccelAngles();
+    // Use callback function and return an array of filtered data
     return filter_func(arr, previous_data, 3);
 }
