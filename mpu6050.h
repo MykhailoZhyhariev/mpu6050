@@ -114,23 +114,35 @@ float* MPU_getFilteredAngles(float *previous_data, float* (* filter_func)(float*
 #define TEMP  33005
 
 /**
- * Transmiting two bytes using UART interface
+ * Transmitting two bytes using UART interface
  * @param data - two-byte value for transmit
  */
 void MPU6050_twoBytesTransmit(int data);
 
 /**
- * Transmiting an array of two-byte digits using UART interface
+ * Receiving two bytes using UART interface
+ * @return    received two-bytes data
+ */
+int MPU6050_twoBytesReceive(void);
+
+/**
+ * Transmitting an array of two-byte digits using UART interface
  * @param arr - an array of two-byte digits
  * @param len - length of array
  */
 void MPU6050_arrayTransmit(int* arr, unsigned char len);
 
 /**
- * Transmiting MPU6050 data
+ * Transmitting MPU6050 data
  * @param id   data type identifier
  * @param data - two-byte value for transmit
  */
 void MPU6050_dataTransmit(int id, int* data);
+
+/**
+ * Transmitting data according to received id
+ * @return data according to received id
+ */
+int* MPU6050_dataReceive();
 
 #endif
