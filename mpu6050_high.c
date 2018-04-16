@@ -14,8 +14,12 @@
  * @param  c - accelerometer data on the axes x, y, z
  * @return   calculated angle
  */
-float _MPU6050_countAngle(float a, float b, float c) {
+float _MPU6050_countAccelAngle(float a, float b, float c) {
     return 57.295 * atan(-a / sqrt(pow(b, 2) + pow(c,2)));
+}
+
+float _MPU6050_countGyroAngle(float previous_data, int data, int delta) {
+    return previous_data + data * delta * 0.001;
 }
 
 /**
@@ -34,14 +38,23 @@ float MPU6050_countTemp(void) {
  * Counts the deviation angles of the MPU6050 module from the accelerometer data on the axes x, y, z
  * @return an array of the calculated angles
  */
-float* MPU_getAccelAngles(void) {
+float* MPU6050_getAccelAngles(void) {
     int* accel = MPU6050_getAccel();
     float *accel_angle = (float *)malloc(sizeof(float) * 3);
-    accel_angle[0] = _MPU6050_countAngle(accel[0], accel[1], accel[2]);
-    accel_angle[1] = _MPU6050_countAngle(accel[1], accel[0], accel[2]);
-    accel_angle[2] = _MPU6050_countAngle(accel[2], accel[0], accel[1]);
+    accel_angle[0] = _MPU6050_countAccelAngle(accel[0], accel[1], accel[2]);
+    accel_angle[1] = _MPU6050_countAccelAngle(accel[1], accel[0], accel[2]);
+    accel_angle[2] = _MPU6050_countAccelAngle(accel[2], accel[0], accel[1]);
 
     return accel_angle;
+}
+
+float* MPU6050_getGyroAngles(float* previous_data, int delta) {
+    int* gyro = MPU6050_getGyro();
+    float *gyro_angle = (float *)malloc(sizeof(float) * 3);
+    for (unsigned char i = 0; i < 3; i++) {
+        gyro_angle[i] = _MPU6050_countGyroAngle(previous_data[i], gyro[i], delta);
+    }
+    return gyro_angle;
 }
 
 /**
@@ -50,12 +63,16 @@ float* MPU_getAccelAngles(void) {
  * @param  filter_func   - a function that filters a data
  * @return               an array of filtered data
  */
-float* MPU_getFilteredAngles(
+float* MPU6050_getFilteredAngles(
     float *previous_data,
-    float* (* filter_func)(float* data, float* previous_data, unsigned char len)
+    float* (* filter_func)(float* accel, float* gyro, float* previous_data, unsigned char len)
 ) {
     // Obtain the angles calculated from the accelerometer data
-    float* arr = MPU_getAccelAngles();
+    float* accel = MPU6050_getAccelAngles();
+
+    // Obtain the angles calculated from the gyroscope data
+    float* gyro = MPU6050_getGyroAngles(previous_data, 200);
+    
     // Use callback function and return an array of filtered data
-    return filter_func(arr, previous_data, 3);
+    return filter_func(accel, gyro, previous_data, 3);
 }

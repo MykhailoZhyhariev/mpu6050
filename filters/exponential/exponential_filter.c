@@ -12,8 +12,8 @@
  * @param  previous_data - previous data value
  * @return               filtered data
  */
-float EXP_getExpFilteredAngle(float data, float previous_data) {
-    return LAMBDA * data + (1 - LAMBDA) * previous_data;
+float EXP_getFilteredAngle(float accel, float previous_data) {
+    return LAMBDA * accel + (1 - LAMBDA) * previous_data;
 }
 
 /**
@@ -23,10 +23,10 @@ float EXP_getExpFilteredAngle(float data, float previous_data) {
  * @param  len           - an array length
  * @return               an array of filtered data
  */
-float* EXP_getExpFilteredAngles(float* data, float* previous_data, unsigned char len) {
+float* EXP_getFilteredAngles(float* accel, float* gyro, float* previous_data, unsigned char len) {
     float* ret = (float *)malloc(sizeof(float) * len);
     for (unsigned char i = 0; i < len; i++) {
-        ret[i] = EXP_getExpFilteredAngle(data[i], previous_data[i]);
+        ret[i] = EXP_getFilteredAngle(accel[i], previous_data[i]);
     }
     return ret;
 }

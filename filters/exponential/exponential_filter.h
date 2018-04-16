@@ -15,7 +15,7 @@
  * @param  previous_data - previous data value
  * @return               filtered data
  */
-float EXP_getExpFilteredAngle(float data, float previous_data);
+float EXP_getFilteredAngle(float accel, float previous_data);
 
 /**
  * Performs an exponential filtering an array of input data
@@ -24,7 +24,7 @@ float EXP_getExpFilteredAngle(float data, float previous_data);
  * @param  len           - an array length
  * @return               an array of filtered data
  */
-float* EXP_getExpFilteredAngles(float* data, float* previous_data, unsigned char len);
+float* EXP_getFilteredAngles(float* accel, float* gyro, float* previous_data, unsigned char len);
 
 
 #endif

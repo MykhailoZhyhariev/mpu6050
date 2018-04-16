@@ -89,13 +89,15 @@ float MPU6050_countTemp(void);
  * @param  c - accelerometer data on the axes x, y, z
  * @return   calculated angle
  */
-float _MPU6050_countAngle(float a, float b, float c);
+float _MPU6050_countAccelAngle(float a, float b, float c);
+
+float* MPU6050_getGyroAngles(float* previous_data, int delta);
 
 /**
  * Counts the deviation angles of the MPU6050 module from the accelerometer data on the axes x, y, z
  * @return an array of the calculated angles
  */
-float* MPU_getAccelAngles(void);
+float* MPU6050_getAccelAngles(void);
 
 /**
  * Carries out the filtration of calculated angles
@@ -103,10 +105,10 @@ float* MPU_getAccelAngles(void);
  * @param  filter_func   - a function that filters a data
  * @return               an array of filtered data
  */
-float* MPU_getFilteredAngles(
-    float *previous_data,
-    float* (* filter_func)(float* data, float* previous_data, unsigned char len)
-);
+ float* MPU6050_getFilteredAngles(
+     float *previous_data,
+     float* (* filter_func)(float* accel, float* gyro, float* previous_data, unsigned char len)
+ );
 
 /**
  * UART FUNCTIONS
