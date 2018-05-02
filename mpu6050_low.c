@@ -6,7 +6,53 @@
 #include <stdlib.h>
 #include "mpu6050.h"
 #include "mpu6050_constants.h"
-#include "twi/i2c.h"
+
+/**
+ * Move pointer to register
+ * @param reg register address [hex]
+ */
+void _MPU6050_moveToReg(unsigned char reg) {
+    I2C_start();
+    I2C_send(MPU6050_W);
+    I2C_send(reg);
+    I2C_stop();
+}
+
+/**
+ * Getting the value from a register
+ * @param  reg register address [hex]
+ * @param  len number of bytes of the register
+ * @return     register value
+ */
+int _MPU6050_getRegValue(unsigned char reg, unsigned char len) {
+    _MPU6050_moveToReg(reg);
+
+    I2C_start();
+    I2C_send(MPU6050_R);
+
+    int value = 0;
+    for (unsigned char i = 0; i < len - 1; i++) {
+        value += I2C_get(0) << 8;
+    }
+    value += I2C_get(1);
+
+    I2C_stop();
+
+    return value;
+}
+
+/**
+ * Writing value to the register
+ * @param reg   register address [hex]
+ * @param value value to write
+ */
+void _MPU6050_writeToReg(unsigned char reg, unsigned char value) {
+    I2C_start();
+    I2C_send(MPU6050_W);
+    I2C_send(reg);
+    I2C_send(value);
+    I2C_stop();
+}
 
 /**
  * Getting an array of registers values
@@ -27,9 +73,12 @@ int* _MPU6050_getArrValues(unsigned char reg, unsigned char len) {
 }
 
 /**
- * Initialise and set the settings MPU6050
+ * Initialize and set the settings MPU6050
  */
 void MPU6050_Init(void) {
+    // I2C Initialize
+    I2C_init();
+
     //Sets sample rate to 8000/1+7 = 1000Hz
     _MPU6050_writeToReg(SMPLRT_DIV, 0x07);
 

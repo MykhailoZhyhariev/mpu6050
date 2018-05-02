@@ -18,6 +18,13 @@ float _MPU6050_countAccelAngle(float a, float b, float c) {
     return 57.295 * atan(-a / sqrt(pow(b, 2) + pow(c,2)));
 }
 
+/**
+ * [_MPU6050_countGyroAngle description]
+ * @param  previous_data - angles that has benn counted on previous iteration
+ * @param  data          - gyroscope data
+ * @param  delta         - the time that passed between the measurements
+ * @return               calculated angle
+ */
 float _MPU6050_countGyroAngle(float previous_data, int data, int delta) {
     return previous_data + data * delta * 0.001;
 }
@@ -48,6 +55,12 @@ float* MPU6050_getAccelAngles(void) {
     return accel_angle;
 }
 
+/**
+ * Counts the deviation angles of the MPU6050 module from the accelerometer data on the axes x, y, z
+ * @param  previous_data - angles that has benn counted on previous iteration
+ * @param  delta         - the time that passed between the measurements
+ * @return               an array of the calculated angles
+ */
 float* MPU6050_getGyroAngles(float* previous_data, int delta) {
     int* gyro = MPU6050_getGyro();
     float *gyro_angle = (float *)malloc(sizeof(float) * 3);
@@ -72,7 +85,7 @@ float* MPU6050_getFilteredAngles(
 
     // Obtain the angles calculated from the gyroscope data
     float* gyro = MPU6050_getGyroAngles(previous_data, 200);
-    
+
     // Use callback function and return an array of filtered data
     return filter_func(accel, gyro, previous_data, 3);
 }
