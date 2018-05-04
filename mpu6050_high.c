@@ -8,6 +8,18 @@
 #include "mpu6050.h"
 
 /**
+ * Computing the temperature in degrees Celsius
+ * @return      temperature in degrees Celsius
+ */
+float MPU6050_countTemp(void) {
+    // Getting the values of temp_high and temp_l registers
+    s32 temp_reg = MPU6050_getTemp();
+
+    // Computing the temperature in degrees Celsius
+    return temp_reg / 340 + 36.53;
+}
+
+/**
  * Counts the deviation angle of the MPU6050 module from the accelerometer data
  * @param  a - accelerometer data on the axes x, y, z
  * @param  b - accelerometer data on the axes x, y, z
@@ -25,20 +37,8 @@ float _MPU6050_countAccelAngle(float a, float b, float c) {
  * @param  delta         - the time that passed between the measurements
  * @return               calculated angle
  */
-float _MPU6050_countGyroAngle(float previous_data, int data, int delta) {
+float _MPU6050_countGyroAngle(float previous_data, s32 data, s32 delta) {
     return previous_data + data * delta * 0.001;
-}
-
-/**
- * Computing the temperature in degrees Celsius
- * @return      temperature in degrees Celsius
- */
-float MPU6050_countTemp(void) {
-    // Getting the values of temp_high and temp_l registers
-    int temp_reg = MPU6050_getTemp();
-
-    // Computing the temperature in degrees Celsius
-    return temp_reg / 340 + 36.53;
 }
 
 /**
@@ -46,7 +46,7 @@ float MPU6050_countTemp(void) {
  * @return an array of the calculated angles
  */
 float* MPU6050_getAccelAngles(void) {
-    int* accel = MPU6050_getAccel();
+    s32* accel = MPU6050_getAccel();
     float *accel_angle = (float *)malloc(sizeof(float) * 3);
     accel_angle[0] = _MPU6050_countAccelAngle(accel[0], accel[1], accel[2]);
     accel_angle[1] = _MPU6050_countAccelAngle(accel[1], accel[0], accel[2]);
@@ -61,10 +61,10 @@ float* MPU6050_getAccelAngles(void) {
  * @param  delta         - the time that passed between the measurements
  * @return               an array of the calculated angles
  */
-float* MPU6050_getGyroAngles(float* previous_data, int delta) {
-    int* gyro = MPU6050_getGyro();
+float* MPU6050_getGyroAngles(float* previous_data, s32 delta) {
+    s32* gyro = MPU6050_getGyro();
     float *gyro_angle = (float *)malloc(sizeof(float) * 3);
-    for (unsigned char i = 0; i < 3; i++) {
+    for (u8 i = 0; i < 3; i++) {
         gyro_angle[i] = _MPU6050_countGyroAngle(previous_data[i], gyro[i], delta);
     }
     return gyro_angle;
@@ -78,7 +78,7 @@ float* MPU6050_getGyroAngles(float* previous_data, int delta) {
  */
 float* MPU6050_getFilteredAngles(
     float *previous_data,
-    float* (* filter_func)(float* accel, float* gyro, float* previous_data, unsigned char len)
+    float* (* filter_func)(float* accel, float* gyro, float* previous_data, u8 len)
 ) {
     // Obtain the angles calculated from the accelerometer data
     float* accel = MPU6050_getAccelAngles();

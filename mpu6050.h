@@ -23,6 +23,16 @@
 #define I2C_send(x)         (i2c_send_byte(x))
 #define I2C_get(x)          (i2c_get_byte(x))
 
+// Signed custom variables types
+typedef int8_t      s8;
+typedef int16_t     s16;
+typedef int32_t     s32;
+
+// Unsigned custom variables types
+typedef uint8_t     u8;
+typedef uint16_t    u16;
+typedef uint32_t    u32;
+
 // Registers address
 #define XG_OFFS_TC          0x00 //[7] PWR_MODE, [6:1] XG_OFFS_TC, [0] OTP_BNK_VLD
 #define YG_OFFS_TC          0x01 //[7] PWR_MODE, [6:1] YG_OFFS_TC, [0] OTP_BNK_VLD
@@ -119,8 +129,8 @@
 #define I2C_SLV1_DO         0x64
 #define I2C_SLV2_DO         0x65
 #define I2C_SLV3_DO         0x66
-#define I2C_MST_DELAY_CT    0x67
-#define SIGNAL_PATH_RESE    0x68
+#define I2C_MST_DELAY_CTRL  0x67
+#define SIGNAL_PATH_RESET   0x68
 #define MOT_DETECT_CTRL     0x69
 #define USER_CTRL           0x6A
 #define PWR_MGMT_1          0x6B
@@ -147,7 +157,7 @@
  * Move pointer to register
  * @param reg register address [hex]
  */
-void _MPU6050_moveToReg(unsigned char reg);
+void _MPU6050_moveToReg(u8 reg);
 
 /**
  * Getting the value from a register
@@ -155,14 +165,14 @@ void _MPU6050_moveToReg(unsigned char reg);
  * @param  len - number of bytes of the register
  * @return     register value
  */
-int _MPU6050_getRegValue(unsigned char reg, unsigned char len);
+s32 _MPU6050_getRegValue(u8 reg, u8 len);
 
 /**
  * Writing value to the register
  * @param reg   - register address [hex]
  * @param value - value to write
  */
-void _MPU6050_writeToReg(unsigned char reg, unsigned char value);
+void _MPU6050_writeToReg(u8 reg, u8 value);
 
 /**
  * LOW LEVEL FUNCTIONS
@@ -174,7 +184,7 @@ void _MPU6050_writeToReg(unsigned char reg, unsigned char value);
  * @param  len - number of bytes of the register
  * @return     the array of values
  */
-int* _MPU6050_getArrValues(unsigned char reg, unsigned char length);
+s32* _MPU6050_getArrValues(u8 reg, u8 length);
 
 /**
  * Initialise and set the settings MPU6050
@@ -185,25 +195,25 @@ void MPU6050_Init(void);
  * Returning a value of "whoAmI" register MPU6050
  * @return  "whoAmI register value"
  */
-unsigned char MPU6050_whoAmI(void);
+u8 MPU6050_whoAmI(void);
 
 /**
  * Getting a value of temperature registers MPU6050
  * @return  temperature register value
  */
-int MPU6050_getTemp(void);
+s32 MPU6050_getTemp(void);
 
 /**
  * Getting a value of accelerometer registers MPU6050
  * @return  the array of accelerometer registers values
  */
-int* MPU6050_getAccel(void);
+s32* MPU6050_getAccel(void);
 
 /**
  * Getting a value of gyroscope registers MPU6050
  * @return  the array of gyroscope registers values
  */
-int* MPU6050_getGyro(void);
+s32* MPU6050_getGyro(void);
 
 /**
  * HIGH LEVEL FUNCTIONS
@@ -231,7 +241,7 @@ float _MPU6050_countAccelAngle(float a, float b, float c);
  * @param  delta         - the time that passed between the measurements
  * @return               calculated angle
  */
-float _MPU6050_countGyroAngle(float previous_data, int data, int delta);
+float _MPU6050_countGyroAngle(float previous_data, s32 data, s32 delta);
 
 /**
  * Counts the deviation angles of the MPU6050 module from the accelerometer data on the axes x, y, z
@@ -239,7 +249,7 @@ float _MPU6050_countGyroAngle(float previous_data, int data, int delta);
  * @param  delta         - the time that passed between the measurements
  * @return               an array of the calculated angles
  */
-float* MPU6050_getGyroAngles(float* previous_data, int delta);
+float* MPU6050_getGyroAngles(float* previous_data, s32 delta);
 
 /**
  * Counts the deviation angles of the MPU6050 module from the accelerometer data on the axes x, y, z
@@ -255,7 +265,7 @@ float* MPU6050_getAccelAngles(void);
  */
 float* MPU6050_getFilteredAngles(
      float *previous_data,
-     float* (* filter_func)(float* accel, float* gyro, float* previous_data, unsigned char len)
+     float* (* filter_func)(float* accel, float* gyro, float* previous_data, u8 len)
 );
 
 #endif

@@ -5,13 +5,12 @@
 
 #include <stdlib.h>
 #include "mpu6050.h"
-#include "mpu6050_constants.h"
 
 /**
  * Move pointer to register
  * @param reg register address [hex]
  */
-void _MPU6050_moveToReg(unsigned char reg) {
+void _MPU6050_moveToReg(u8 reg) {
     I2C_start();
     I2C_send(MPU6050_W);
     I2C_send(reg);
@@ -24,14 +23,14 @@ void _MPU6050_moveToReg(unsigned char reg) {
  * @param  len number of bytes of the register
  * @return     register value
  */
-int _MPU6050_getRegValue(unsigned char reg, unsigned char len) {
+s32 _MPU6050_getRegValue(u8 reg, u8 len) {
     _MPU6050_moveToReg(reg);
 
     I2C_start();
     I2C_send(MPU6050_R);
 
-    int value = 0;
-    for (unsigned char i = 0; i < len - 1; i++) {
+    s32 value = 0;
+    for (u8 i = 0; i < len - 1; i++) {
         value += I2C_get(0) << 8;
     }
     value += I2C_get(1);
@@ -46,7 +45,7 @@ int _MPU6050_getRegValue(unsigned char reg, unsigned char len) {
  * @param reg   register address [hex]
  * @param value value to write
  */
-void _MPU6050_writeToReg(unsigned char reg, unsigned char value) {
+void _MPU6050_writeToReg(u8 reg, u8 value) {
     I2C_start();
     I2C_send(MPU6050_W);
     I2C_send(reg);
@@ -60,12 +59,12 @@ void _MPU6050_writeToReg(unsigned char reg, unsigned char value) {
  * @param  len - number of bytes of the register
  * @return     the array of values
  */
-int* _MPU6050_getArrValues(unsigned char reg, unsigned char len) {
+s32* _MPU6050_getArrValues(u8 reg, u8 len) {
     // Create array
-    int *arr = (int *)malloc(len * sizeof(int));
+    s32 *arr = (s32 *)malloc(len * sizeof(s32));
 
     // Getting values of registers
-    for (int i = 0; i < len; i++) {
+    for (u8 i = 0; i < len; i++) {
         arr[i] = _MPU6050_getRegValue(reg + i * 2, 2);
     }
 
@@ -162,7 +161,7 @@ void MPU6050_Init(void) {
  * Returning a value of "whoAmI" register MPU6050
  * @return  "whoAmI" register value
  */
-unsigned char MPU6050_whoAmI(void) {
+u8 MPU6050_whoAmI(void) {
     // Getting value of "whoAmI" register
     return _MPU6050_getRegValue(WHO_AM_I, 1);
 }
@@ -171,7 +170,7 @@ unsigned char MPU6050_whoAmI(void) {
  * Getting a value of temperature registers MPU6050
  * @return  temperature register value
  */
-int MPU6050_getTemp(void) {
+s32 MPU6050_getTemp(void) {
     // Getting value of temperature register
     return _MPU6050_getRegValue(TEMP_OUT_H, 2);
 }
@@ -180,7 +179,7 @@ int MPU6050_getTemp(void) {
  * Getting a value of accelerometer registers MPU6050
  * @return  the array of accelerometer registers values
  */
-int* MPU6050_getAccel(void) {
+s32* MPU6050_getAccel(void) {
     // Getting value of accelerometer registers for X, Y and Z axises
     return _MPU6050_getArrValues(ACCEL_XOUT_H, 3);
 }
@@ -189,7 +188,7 @@ int* MPU6050_getAccel(void) {
  * Getting a value of gyroscope registers MPU6050
  * @return  the array of gyroscope registers values
  */
-int* MPU6050_getGyro(void) {
+s32* MPU6050_getGyro(void) {
     // Getting value of gyroscope registers for X, Y and Z axises
     return _MPU6050_getArrValues(GYRO_XOUT_H, 3);
 }
