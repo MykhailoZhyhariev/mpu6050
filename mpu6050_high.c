@@ -27,7 +27,7 @@ float MPU6050_countTemp(void) {
  * @return   calculated angle
  */
 float _MPU6050_countAccelAngle(float a, float b, float c) {
-    return 57.295 * atan(-a / sqrt(pow(b, 2) + pow(c,2)));
+    return 57.295 * atan(a / sqrt(pow(b, 2) + pow(c,2)));
 }
 
 /**
