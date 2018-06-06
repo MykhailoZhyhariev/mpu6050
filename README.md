@@ -16,6 +16,20 @@ Initialize and usage
 
 To initialize, you must use the `MPU6050_Init`.
 
+To get temperature register value you should use `MPU6050_getTemp`.
+
+To get accelerometer registers values you should use `MPU6050_getAccel`.
+
+To get gyroscope registers values you should use `MPU6050_getGyro`.
+
+To get temperature value in degrees Celsius you should use `MPU6050_countTemp`.
+
+To get temperature value in degrees Celsius you should use `MPU6050_countTemp`.
+
+To get accelerometer angles values you should use `MPU6050_getAccelAngles`.
+
+To get gyroscope angles values you should use `MPU6050_getGyroAngles`.
+
 Custom variable type
 --------------------
 
