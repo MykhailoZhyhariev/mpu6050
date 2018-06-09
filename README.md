@@ -30,6 +30,12 @@ To get accelerometer angles values you should use `MPU6050_getAccelAngles`.
 
 To get gyroscope angles values you should use `MPU6050_getGyroAngles`.
 
+Filtration accelerometer and gyroscope angles
+---------------------------------------------
+
+Coming soon....
+
+
 Custom variable type
 --------------------
 
