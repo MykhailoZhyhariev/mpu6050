@@ -187,7 +187,7 @@ void _MPU6050_writeToReg(u8 reg, u8 value);
 s32* _MPU6050_getArrValues(u8 reg, u8 length);
 
 /**
- * Initialise and set the settings MPU6050
+ * Initialize and set the settings MPU6050
  */
 void MPU6050_Init(void);
 

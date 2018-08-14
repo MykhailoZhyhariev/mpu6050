@@ -11,24 +11,25 @@ Supported devices:
 -   raspberryPi;
 -   etc...
 
+
 Initialize and usage
 --------------------
 
-To initialize, you must use the `MPU6050_Init`.
+- `MPU6050_Init` - Initialize and set the settings MPU6050;
 
-To get temperature register value you should use `MPU6050_getTemp`.
+- `MPU6050_whoAmI` - Returning a value of "whoAmI" register MPU6050;
 
-To get accelerometer registers values you should use `MPU6050_getAccel`.
+- `MPU6050_getTemp` - Getting a value of temperature registers MPU6050;
 
-To get gyroscope registers values you should use `MPU6050_getGyro`.
+- `MPU6050_getAccel` - Getting a value of accelerometer registers MPU6050;
 
-To get temperature value in degrees Celsius you should use `MPU6050_countTemp`.
+- `MPU6050_getGyro` - Getting a value of gyroscope registers MPU6050;
 
-To get temperature value in degrees Celsius you should use `MPU6050_countTemp`.
+- `MPU6050_countTemp` - Computing the temperature in degrees Celsius;
 
-To get accelerometer angles values you should use `MPU6050_getAccelAngles`.
+- `MPU6050_getGyroAngles` - Counts the deviation angles of the MPU6050 module from the accelerometer data on the axes x, y, z;
 
-To get gyroscope angles values you should use `MPU6050_getGyroAngles`.
+- `MPU6050_getAccelAngles` - Counts the deviation angles of the MPU6050 module from the accelerometer data on the axes x, y, z.
 
 
 Custom variable type
@@ -49,6 +50,7 @@ typedef uint8_t     u8;
 typedef uint16_t    u16;
 typedef uint32_t    u32;
 ```
+
 
 Data transmit/receive protocol
 ------------------------------
@@ -77,6 +79,7 @@ You also can specify you own I2C functions:
 #define I2C_send(x)     (i2c_send_byte(x))
 #define I2C_get(x)      (i2c_get_byte(x))
 ```
+
 
 Filtration accelerometer and gyroscope angles
 ---------------------------------------------
