@@ -30,11 +30,6 @@ To get accelerometer angles values you should use `MPU6050_getAccelAngles`.
 
 To get gyroscope angles values you should use `MPU6050_getGyroAngles`.
 
-Filtration accelerometer and gyroscope angles
----------------------------------------------
-
-Coming soon....
-
 
 Custom variable type
 --------------------
@@ -81,4 +76,71 @@ You also can specify you own I2C functions:
 #define I2C_stop()      (i2c_stop_cond())
 #define I2C_send(x)     (i2c_send_byte(x))
 #define I2C_get(x)      (i2c_get_byte(x))
+```
+
+Filtration accelerometer and gyroscope angles
+---------------------------------------------
+
+You should use `MPU6050_getFilteredAngles` function.
+
+`MPU6050_getFilteredAngles` take `previous_data` and `filter_func` as params and return an array on filtered values.
+
+`float* filter_func` is a callback function that take:
+
+1) `float* accel` - an array of unfiltered accelerometer data;
+
+2) `float* gyro` - an array of unfiltered gyroscope data;
+
+3) `float* previous_data` - an array of previous filtered data;
+
+4) `u8 len` - an arrays length;
+
+If you need to filter only one vector (only accelerometer or only gyroscope) you can use `NULL` instead of an array pointer.
+
+Small example of filtering value.
+
+```
+// Filtration coefficient
+#define LAMBDA  0.5
+
+/**
+ * Performs an exponential filtering of input data
+ * @param  data          - input data value
+ * @param  previous_data - previous data value
+ * @return               filtered data
+ */
+float EXP_getFilteredAngle(float accel, float previous_data) {
+    return LAMBDA * accel + (1 - LAMBDA) * previous_data;
+}
+
+/**
+ * Performs an exponential filtering an array of input data
+ * @param  data          - an array of input data
+ * @param  previous_data - an array of previous data value
+ * @param  len           - an array length
+ * @return               an array of filtered data
+ */
+float* EXP_getFilteredAngles(float* accel, float* gyro, float* previous_data, unsigned char len) {
+    float* ret = (float *)malloc(sizeof(float) * len);
+    for (unsigned char i = 0; i < len; i++) {
+        ret[i] = EXP_getFilteredAngle(accel[i], previous_data[i]);
+    }
+    return ret;
+}
+
+int main(void) {
+  // Some code...
+
+  // Allocating memory for an array
+  float* filtered_accel = (float *)malloc(sizeof(float) * 3);
+  for (u8 i = 0; i < 3; i++) filtered_accel[i] = 0;
+
+  while(1) {
+    // Getting filtered accelerometer data
+    filtered_accel = MPU6050_getFilteredAngles(filtered_accel, EXP_getFilteredAngles);
+
+    // Waiting 500ms before doing next measured
+    _delay_ms(500);
+  }
+}
 ```
