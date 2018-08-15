@@ -5,6 +5,8 @@ The MPU-6050 is the world’s first integrated 6-axis MotionTracking device that
 
 Here is a small library for work with MPU6050.
 
+Star this repository, if it turned out to be useful to you. Thank you :)
+
 Supported devices:
 -   AVR microcontrollers;
 -   orangePi;
