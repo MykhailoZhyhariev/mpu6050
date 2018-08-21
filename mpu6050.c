@@ -3,8 +3,10 @@
  * License: MIT
  */
 
+#include <math.h>
 #include <stdlib.h>
 #include "mpu6050.h"
+
 
 /**
  * Move pointer to register
@@ -192,15 +194,6 @@ s32* MPU6050_getGyro(void) {
     // Getting value of gyroscope registers for X, Y and Z axises
     return _MPU6050_getArrValues(GYRO_XOUT_H, 3);
 }
-
-/* Name: mpu6050_high.c
- * Author: Zhyhariev Mikhail
- * License: MIT
- */
-
-#include <math.h>
-#include <stdlib.h>
-#include "mpu6050.h"
 
 /**
  * Computing the temperature in degrees Celsius
