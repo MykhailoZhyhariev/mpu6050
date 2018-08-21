@@ -6,6 +6,8 @@
 #ifndef MPU_6050
 #define MPU_6050
 
+#include <stdlib.h>
+
 // Path to I2C library. You can specify your path.
 #include "twi/i2c.h"
 
